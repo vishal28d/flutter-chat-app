@@ -67,32 +67,32 @@ class _HomePageState extends State<HomePage> {
 }
 
 
-  // build individual uaw list items
-  Widget _buildUserListItem(DocumentSnapshot document) {
-  Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+ Widget _buildUserListItem(DocumentSnapshot document) {
+  Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
 
-  // display all users except current users 
-  if (_auth.currentUser!.email != data['email']) {
-    return ListTile(
-      title: Text(data['email']),  // Wrap the email in Text widget
-      onTap: () {
-        // pass the clicked users UID to the chat page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatPage(
-              receiverUserEmail: data['email'],
-              receiverUserId: data['uid'],
+  // Check if data is not null and contains required properties
+  if (data != null && data.containsKey('email') && data.containsKey('uid')) {
+    // display all users except current users 
+    if (_auth.currentUser?.email != data['email']) {
+      return ListTile(
+        title: Text(data['email'] as String),  // Wrap the email in Text widget
+        onTap: () {
+          // pass the clicked user's UID to the chat page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatPage(
+                receiverUserEmail: data['email'] as String,
+                receiverUserId: data['uid'] as String,
+              ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    }
   }
-  else{
-  return Container();  // Return an empty container if the condition is not met
 
-  }
+  return Container();  // Return an empty container if the conditions are not met
 }
 
 
