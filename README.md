@@ -1,6 +1,7 @@
 # chat_app
 
 A new Flutter project.
+https://chat-app-flutter-4b9fd.web.app/
 
 ## Getting Started
 
