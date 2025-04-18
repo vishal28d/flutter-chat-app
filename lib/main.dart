@@ -4,7 +4,7 @@ import 'package:chat_app/services/auth/auth_gate.dart';
 import 'package:chat_app/services/auth/auth_service.dart';
 import 'package:chat_app/services/auth/login_or_register.dart';
 import 'package:chat_app/pages/login_page.dart';
-import 'dart:js';
+
 import 'package:chat_app/pages/register_page.dart';
 import 'package:chat_app/themes/light_mode.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
 
-  @override
+@override
   Widget build(BuildContext context) {
     return MaterialApp(
      debugShowCheckedModeBanner: false,

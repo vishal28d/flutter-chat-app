@@ -47,19 +47,27 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // logo
-            Icon(
-              Icons.message,
-              size: 60,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+            // Icon(
+            //   Icons.message,
+            //   size: 60,
+            //   color: Theme.of(context).colorScheme.primary,
+            // ),
 
-            SizedBox(height: 30),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset('assets/signup.png' ,
+                height: 200,
+                fit: BoxFit.cover,  
+              ),
+            ) ,
+
+            SizedBox(height: 10),
 
             //welcome
             Text(

@@ -1,4 +1,5 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, use_build_context_synchronously, dead_code_catch_following_catch
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables,
+// must_be_immutable, use_build_context_synchronously, dead_code_catch_following_catch
 
 import 'package:chat_app/services/auth/auth_service.dart';
 import 'package:chat_app/components/my_button.dart';
@@ -16,51 +17,51 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final  emailController = TextEditingController();
-
-  final  passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   void login(BuildContext context) async {
-    // auth service
-    final authService = Provider.of<AuthService>(context, listen: false) ;
+    final authService = Provider.of<AuthService>(context, listen: false);
 
-    // try login
     try {
       await authService.signInWithEmailandPassword(
-          emailController.text, 
-          passwordController.text,
-          );
-    } catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-    }  
-    catch (e) {
+        emailController.text,
+        passwordController.text,
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } catch (e) {
       showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text(e.toString()),
-              ),
-              );
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // logo
-            Icon(
-              Icons.message,
-              size: 60,
-              color: Theme.of(context).colorScheme.primary,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                'assets/login.png',
+                height: 250,
+                fit: BoxFit.cover,
+              ),
             ),
 
-            SizedBox(height: 30),
+            SizedBox(height: 20),
 
-            //welcome
+            // Welcome text
             Text(
               "Welcome back..",
               style: TextStyle(
@@ -69,9 +70,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 25),
 
-            // email textfield
+            // Email textfield
             MyTextField(
               hintText: 'Email',
               obscureText: false,
@@ -80,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
 
             SizedBox(height: 10),
 
-            // paswrd
+            // Password textfield
             MyTextField(
               hintText: 'Password',
               obscureText: true,
@@ -89,11 +90,15 @@ class _LoginPageState extends State<LoginPage> {
 
             SizedBox(height: 10),
 
-            // login button
-            MyButton(text: 'Login', onTap: () => login(context)),
+            // Login button
+            MyButton(
+              text: 'Login',
+              onTap: () => login(context),
+            ),
 
-            // register now
             SizedBox(height: 10),
+
+            // Register option
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

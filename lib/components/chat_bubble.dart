@@ -4,27 +4,38 @@ class ChatBubble extends StatelessWidget {
   final String message;
   final bool isMe;
 
-  ChatBubble({required this.message, required this.isMe});
+  const ChatBubble({super.key, required this.message, required this.isMe});
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-        padding: EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
         decoration: BoxDecoration(
-          color: isMe ? Colors.blue : Colors.red[300],
+          color: isMe ? const Color(0xFFE1FFC7) : Colors.white,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(isMe ? 15 : 0),
-            topRight: Radius.circular(isMe ? 0 : 15),
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
+            topLeft: const Radius.circular(12),
+            topRight: const Radius.circular(12),
+            bottomLeft: Radius.circular(isMe ? 12 : 0),
+            bottomRight: Radius.circular(isMe ? 0 : 12),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 2,
+            ),
+          ],
         ),
         child: Text(
           message,
-          style: TextStyle(color: isMe ? Colors.white : Colors.black),
+          style: const TextStyle(
+            color: Colors.black87,
+            fontSize: 16,
+          ),
         ),
       ),
     );
