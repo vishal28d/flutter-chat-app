@@ -47,15 +47,19 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(widget.receiverUserEmail),
+        title: Text(
+          widget.receiverUserEmail,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+        ),
+        centerTitle: false,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        centerTitle: true,
+        elevation: 0,
       ),
       body: Column(
         children: [
           Expanded(child: _buildMessageList()),
-          const Divider(height: 1),
           _buildMessageInput(),
         ],
       ),
@@ -104,21 +108,49 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageInput() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      color: Colors.grey[200],
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            offset: const Offset(0, -1),
+            blurRadius: 4,
+          ),
+        ],
+      ),
       child: Row(
         children: [
+          // Textfield
           Expanded(
-            child: MyTextField(
-              controller: _messageController,
-              hintText: 'Type a message',
-              obscureText: false,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextField(
+                controller: _messageController,
+                decoration: const InputDecoration(
+                  hintText: "Type a message",
+                  border: InputBorder.none,
+                ),
+              ),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 6),
+
+          // Send button
           GestureDetector(
             onTap: sendMessage,
-            child: const Icon(Icons.send, size: 30, color: Colors.green),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.send, size: 22, color: Colors.white),
+            ),
           ),
         ],
       ),

@@ -1,3 +1,4 @@
+import 'package:chat_app/components/app_drawer.dart';
 import 'package:chat_app/pages/chat_page.dart';
 import 'package:chat_app/services/auth/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,21 +24,32 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100, // WhatsApp-like background
       appBar: AppBar(
-        title: const Text("Home Page", style: TextStyle(color: Colors.white)),
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: const Text(
+          "We Chat",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.green.shade600,
         actions: [
           IconButton(
             onPressed: signOut,
             icon: const Icon(Icons.logout, color: Colors.white),
-          )
+          ),
         ],
       ),
+      drawer: AppDrawer(user: _auth.currentUser), // ✅ Drawer added
       body: _buildUserList(),
     );
   }
 
+  // 🔹 Show list of users
   Widget _buildUserList() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('users').snapshots(),
@@ -51,6 +63,7 @@ class _HomePageState extends State<HomePage> {
         }
 
         return ListView(
+          padding: const EdgeInsets.symmetric(vertical: 8),
           children: snapshot.data!.docs
               .map<Widget>((doc) => _buildUserListItem(doc))
               .toList(),
@@ -59,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // 🔹 Each user item
   Widget _buildUserListItem(DocumentSnapshot document) {
     Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
 
@@ -67,7 +81,7 @@ class _HomePageState extends State<HomePage> {
         data.containsKey('uid') &&
         _auth.currentUser?.email != data['email']) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         child: InkWell(
           onTap: () {
             Navigator.push(
@@ -80,38 +94,45 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           },
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14),
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(16),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(14),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.6),
-                  blurRadius: 6,
+                  color: Colors.grey.withOpacity(0.15),
+                  blurRadius: 8,
                   offset: const Offset(0, 3),
                 ),
               ],
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
             child: Row(
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.blueAccent.withOpacity(0.2),
-                  child: const Icon(Icons.person, color: Colors.black87),
+                  radius: 24,
+                  backgroundColor: Colors.green.shade100,
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.green.shade700,
+                    size: 26,
+                  ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 14),
                 Expanded(
                   child: Text(
                     data['email'],
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
                 ),
-                Icon(Icons.chat, color: Colors.grey.shade600),
+                Icon(Icons.chat_bubble_rounded,
+                    color: Colors.green.shade500, size: 22),
               ],
             ),
           ),
